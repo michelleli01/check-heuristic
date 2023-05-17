@@ -5,7 +5,8 @@ from copy import deepcopy
 def minimax(board, n, a, b, max_player):
   if n == 0:
       return calculate_heuristics(board)
-  curr = Node(deepcopy(board))
+
+  curr = State(deepcopy(board))
   if max_player == True:
       max_eval = -math.inf
       for c in curr.get_children(True):
@@ -14,7 +15,6 @@ def minimax(board, n, a, b, max_player):
           a = max(a, ev)
           if b <= a:
               break
-      curr.set_value(max_eval)
       return max_eval
   else:
       min_eval = math.inf
@@ -25,7 +25,6 @@ def minimax(board, n, a, b, max_player):
 
           if b <= a:
               break
-      curr.set_value(min_eval)
       return min_eval
 
 def calculate_heuristics(p_pieces, c_pieces, board):
