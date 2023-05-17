@@ -4,9 +4,8 @@ import math
 
 
 class Node:
-    def __init__(self, board, move=None, val=None):
+    def __init__(self, board, move=None):
         self.board = board
-        self.val = val
         self.move = move
 
     def get_children(self, max_player):
@@ -25,9 +24,6 @@ class Node:
             Checkers.move_piece(state, current_pos, new_pos)
             children.append(Node(state, [current_pos, new_pos]))
         return children
-
-    def set_value(self, val):
-        self.val = val
 
     def get_board(self):
         return self.board
@@ -296,7 +292,6 @@ class Checkers:
     def get_input(self):
         # USER PLAYING
         poss_moves = Checkers.possible_moves(self.board, comp_playing=False)
-        print(poss_moves)
         if len(poss_moves) == 0:
             if self.c_pieces > self.p_pieces:
                 print(
@@ -402,7 +397,6 @@ class Checkers:
                 a = max(a, ev)
                 if b <= a:
                     break
-            curr.set_value(max_eval)
             return max_eval
         else:
             min_eval = math.inf
@@ -413,7 +407,6 @@ class Checkers:
 
                 if b <= a:
                     break
-            curr.set_value(min_eval)
             return min_eval
 
     def play(self):
