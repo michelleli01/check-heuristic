@@ -370,8 +370,11 @@ class Checkers:
         t1 = time.time()
         diff = t1-t
 
+        letters = ["A", "B", "C", "D", "E", "F", "G", "H"]
+        numbers = ["1", "2", "3", "4", "5", "6", "7", "8"]
+
         print(
-            f"Computer moved from '{str(move[0][0]), str(move[0][1])}' to '{str(move[1][0]), str(move[1][1])}'")
+            f"Computer moved from '{letters[move[0][0]]}{numbers[move[0][1]]}' to '{letters[move[1][0]]}{numbers[move[1][1]]}'")
         print(
             f"Total time taken for computer to make move: {str(diff)} seconds")
 
