@@ -1,10 +1,10 @@
 import pygame
 from piece import Piece
-from node import Node
+# from node import State
 from copy import deepcopy
 import time
 import math
-import algo
+import algo as algo
 
 class Board:
   def __init__(self):
@@ -20,36 +20,36 @@ class Board:
 
   def evaluate(self):
       t = time.time()
-      curr = Node(deepcopy(self.board))
-      c_moves = curr.get_children(True)
-      if len(c_moves) == 0:
-          if self.p_pieces > self.c_pieces:
-              print("You have more pieces than the computer. YOU WIN")
-              exit()
-          else:
-              print("Computer has no available moves left. DRAW")
-              exit()
+    #   curr = State(deepcopy(self.board))
+    #   c_moves = curr.get_children(True)
+    #   if len(c_moves) == 0:
+    #       if self.p_pieces > self.c_pieces:
+    #           print("You have more pieces than the computer. YOU WIN")
+    #           exit()
+    #       else:
+    #           print("Computer has no available moves left. DRAW")
+    #           exit()
 
-      d = dict()
-      for i in range(len(c_moves)):
-          c = c_moves[i]
-          val = algo.minimax(self, c.get_board(), 5, -math.inf, math.inf, False)
-          d[val] = c
+    #   d = dict()
+    #   for i in range(len(c_moves)):
+    #       c = c_moves[i]
+    #       val = algo.minimax(self, c.get_board(), 5, -math.inf, math.inf, False)
+    #       d[val] = c
 
-      if len(d.keys()) == 0:
-          print("Computer has cornered itself. YOU WIN")
-          exit()
-      n_board = d[max(d)].get_board()
-      move = d[max(d)].move
-      self.board = n_board
+    #   if len(d.keys()) == 0:
+    #       print("Computer has cornered itself. YOU WIN")
+    #       exit()
+    #   n_board = d[max(d)].get_board()
+    #   move = d[max(d)].move
+    #   self.board = n_board
 
-      t1 = time.time()
-      diff = t1-t
+    #   t1 = time.time()
+    #   diff = t1-t
 
-      print(
-          f"Computer moved from '{str(move[0][0]), str(move[0][1])}' to '{str(move[1][0]), str(move[1][1])}'")
-      print(
-          f"Total time taken for computer to make move: {str(diff)} seconds")
+    #   print(
+    #       f"Computer moved from '{str(move[0][0]), str(move[0][1])}' to '{str(move[1][0]), str(move[1][1])}'")
+    #   print(
+    #       f"Total time taken for computer to make move: {str(diff)} seconds")
 
   def get_all_pieces(self, color):
       pieces = []

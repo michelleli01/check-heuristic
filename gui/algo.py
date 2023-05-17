@@ -1,5 +1,5 @@
 import math
-from node import Node
+from node import State
 from copy import deepcopy
 
 def minimax(board, n, a, b, max_player):
