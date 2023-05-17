@@ -404,7 +404,6 @@ class Checkers:
                 ev = Checkers.minimax(self, c.get_board(), n-1, a, b, True)
                 min_eval = min(min_eval, ev)
                 b = min(b, ev)
-
                 if b <= a:
                     break
             return min_eval
