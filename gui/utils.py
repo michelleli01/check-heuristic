@@ -3,22 +3,23 @@ def valid(board, current_pos, new_pos, eat, comp_playing):
         cC = current_pos[1]
         nR = new_pos[0]
         nC = new_pos[1]
+
         if nR > 7 or nR < 0:
             return False
         if nC > 7 or nC < 0:
             return False
-        if board[cR][cC] == None:
+        if board[cR][cC] == 0:
             return False
-        if board[nR][nC] != None:
+        if board[nR][nC] != 0:
             return False
         if comp_playing:
             if board[cR][cC].color == (255, 255, 255) :
                 return False
         if not comp_playing:
             if board[cR][cC].color == (255, 0, 0):
-                return False
+              return False
         if eat == (-1, -1):
-            return board[nR][nC] == None
+            return board[nR][nC] == 0
         else:
             return jump(board, current_pos, new_pos, eat)
 
@@ -37,47 +38,50 @@ def jump(board, current_pos, new_pos, eat=(-1, -1)):
             return True
     return False
 
-def possible_moves(board, comp_playing):
+def possible_moves(board, piece, comp_playing):
     moves = []
-    for r in range(8):
-        for c in range(8):
-            if comp_playing:
-                if board[r][c].color == (255, 255, 255) or board[r][c].king:
-                    if valid(board, (r, c), (r + 1, c + 1), (-1, -1), comp_playing):
-                        moves.append([(r, c), (r + 1, c + 1)])
-                    if valid(board, (r, c), (r + 1, c - 1), (-1, -1), comp_playing):
-                        moves.append([(r, c), (r + 1, c - 1)])
-                    if valid(board, (r, c), (r + 2, c - 2), (r+1, c-1), comp_playing):
-                        moves.append([(r, c), (r + 2, c - 2)])
-                    if valid(board, (r, c), (r + 2, c + 2), (r+1, c+1), comp_playing):
-                        moves.append([(r, c), (r + 2, c + 2)])
-                if board[r][c].king:
-                    if valid(board, (r, c), (r - 1, c - 1), (-1, -1), comp_playing):
-                        moves.append([(r, c), (r - 1, c - 1)])
-                    if valid(board, (r, c), (r - 1, c + 1), (-1, -1), comp_playing):
-                        moves.append([(r, c), (r - 1, c + 1)])
-                    if valid(board, (r, c), (r - 2, c - 2), (r-1, c-1), comp_playing):
-                        moves.append([(r, c), (r - 2, c - 2)])
-                    if valid(board, (r, c), (r - 2, c + 2), (r-1, r+1), comp_playing):
-                        moves.append([(r, c), (r - 2, c + 2)])
-            if not comp_playing:
-                if board[r][c].color == (255, 0, 0) or board[r][c].king:
-                    if valid(board, (r, c), (r - 1, c - 1), (-1, -1), comp_playing):
-                        moves.append([(r, c), (r - 1, c - 1)])
-                    if valid(board, (r, c), (r - 1, c + 1), (-1, -1), comp_playing):
-                        moves.append([(r, c), (r - 1, c + 1)])
-                    if valid(board, (r, c), (r - 2, c - 2), (r-1, c-1), comp_playing):
-                        moves.append([(r, c), (r - 2, c - 2)])
-                    if valid(board, (r, c), (r - 2, c + 2), (r-1, c+1), comp_playing):
-                        moves.append([(r, c), (r - 2, c + 2)])
-                if board[r][c].king:
-                    if valid(board, (r, c), (r + 1, c - 1), (-1, -1), comp_playing):
-                        moves.append([(r, c), (r + 1, c - 1)])
-                    if valid(board, (r, c), (r + 1, c + 1), (-1, -1), comp_playing):
-                        moves.append([(r, c), (r + 1, c + 1)])
-                    if valid(board, (r, c), (r + 2, c - 2), (r+1, c-1), comp_playing):
-                        moves.append([(r, c), (r + 2, c - 2)])
-                    if valid(board, (r, c), (r + 2, c + 2), (r+1, c+1), comp_playing):
-                        moves.append([(r, c), (r + 2, c + 2)])
+    if piece != 0:
+        r = piece.row
+        c = piece.col
+        if comp_playing:
+            if piece.color == (255, 0, 0) or piece.king:
+              if valid(board, (r, c), (r + 1, c + 1), (-1, -1), comp_playing):
+                moves.append([(r, c), (r + 1, c + 1)])
+              if valid(board, (r, c), (r + 1, c - 1), (-1, -1), comp_playing):
+                moves.append([(r, c), (r + 1, c - 1)])
+              if valid(board, (r, c), (r + 2, c - 2), (r+1, c-1), comp_playing):
+                moves.append([(r, c), (r + 2, c - 2)])
+              if valid(board, (r, c), (r + 2, c + 2), (r+1, c+1), comp_playing):
+                moves.append([(r, c), (r + 2, c + 2)])
+
+            if piece.king:
+              if valid(board, (r, c), (r - 1, c - 1), (-1, -1), comp_playing):
+                moves.append([(r, c), (r - 1, c - 1)])
+              if valid(board, (r, c), (r - 1, c + 1), (-1, -1), comp_playing):
+                moves.append([(r, c), (r - 1, c + 1)])
+              if valid(board, (r, c), (r - 2, c - 2), (r-1, c-1), comp_playing):
+                moves.append([(r, c), (r - 2, c - 2)])
+              if valid(board, (r, c), (r - 2, c + 2), (r-1, r+1), comp_playing):
+                moves.append([(r, c), (r - 2, c + 2)])
+        if not comp_playing:
+          if piece.color == (255, 255, 255) or piece.king:
+
+              if valid(board, (r, c), (r - 1, c - 1), (-1, -1), comp_playing):
+                moves.append([(r, c), (r - 1, c - 1)])
+              if valid(board, (r, c), (r - 1, c + 1), (-1, -1), comp_playing):
+                moves.append([(r, c), (r - 1, c + 1)])
+              if valid(board, (r, c), (r - 2, c - 2), (r-1, c-1), comp_playing):
+                moves.append([(r, c), (r - 2, c - 2)])
+              if valid(board, (r, c), (r - 2, c + 2), (r-1, c+1), comp_playing):
+                moves.append([(r, c), (r - 2, c + 2)])
+          if piece.king:
+              if valid(board, (r, c), (r + 1, c - 1), (-1, -1), comp_playing):
+                moves.append([(r, c), (r + 1, c - 1)])
+              if valid(board, (r, c), (r + 1, c + 1), (-1, -1), comp_playing):
+                moves.append([(r, c), (r + 1, c + 1)])
+              if valid(board, (r, c), (r + 2, c - 2), (r+1, c-1), comp_playing):
+                moves.append([(r, c), (r + 2, c - 2)])
+              if valid(board, (r, c), (r + 2, c + 2), (r+1, c+1), comp_playing):
+                moves.append([(r, c), (r + 2, c + 2)])
 
     return moves

@@ -11,11 +11,13 @@ class Game:
         self.board = Board()
         self.player = (255, 255, 255)
         self.moves = []
+        self.comp_playing = False
 
     def winner(self):
         return self.board.winner()
 
     def select(self, row, col):
+        print(row, col)
         if self.selected:
             result = self.move(row, col)
             if not result:
@@ -24,7 +26,8 @@ class Game:
         piece = self.board.get_piece(row, col)
         if piece != 0 and piece.color == self.player:
             self.selected = piece
-            self.valid_moves = self.board.get_possible_moves(piece)
+            self.moves = self.board.get_possible_moves(piece, self.comp_playing)
+            print(self.moves)
             return True
 
         return False
@@ -50,15 +53,19 @@ class Game:
 
     def draw_valid_moves(self, moves):
         for move in moves:
-            row, col = move
-            pygame.draw.circle(self.screen, (0, 0, 255), (col*100 + 100//2, row * 100 + 100//2), 15)
+            newRow = move[1][0]
+            newCol = move[1][1]
+            pygame.draw.circle(self.screen, (0, 0, 255), (newCol*100 + 100//2, newRow * 100 + 100//2), 15)
 
     def switch_player(self):
         self.moves = []
         if self.player == (255, 0, 0):
             self.player = (255, 255, 255)
+            self.comp_playing = False
         else:
-            self.turn = (255, 0, 0)
+            self.player = (255, 0, 0)
+            self.comp_playing = True
+
 
     def get_board(self):
         return self.board

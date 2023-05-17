@@ -27,7 +27,6 @@ def main():
     pygame.display.set_caption("Check-heuristic")
 
     game = Game(screen)
-    comp_playing = False
 
     while playing:
         clock.tick(60)

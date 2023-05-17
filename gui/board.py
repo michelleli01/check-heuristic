@@ -9,7 +9,7 @@ import utils
 
 class Board:
     def __init__(self):
-        self.board =  [[], [], [], [], [], [], [], []]
+        self.board =  []
         self.c_pieces = self.p_pieces = 12
         self.c_kings = self.p_kings = 0
         self.create_board()
@@ -116,5 +116,5 @@ class Board:
 
         return None
 
-    def get_possible_moves(self, comp_playing):
-        return utils.possible_moves(self.board, comp_playing)
+    def get_possible_moves(self, piece, comp_playing):
+        return utils.possible_moves(self.board, piece, comp_playing)
