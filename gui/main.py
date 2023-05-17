@@ -1,5 +1,7 @@
 import pygame
-from board import Board
+from game import Game
+import algo
+import math
 
 WIDTH = 800
 HEIGHT = 800
@@ -24,13 +26,20 @@ def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Check-heuristic")
 
-    board = Board()
+    game = Game(screen)
     comp_playing = False
 
     while playing:
         clock.tick(60)
-        board.draw(screen=screen)
-        pygame.display.flip()
+        # board.draw(screen=screen)
+        # pygame.display.flip()
+
+        if game.player == (255, 0, 0):
+            val = algo.minimax(game.get_board(), 5, -math.inf, math.inf, False)
+
+        if game.winner() != None:
+            print(game.winner())
+            playing = False
 
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
@@ -39,9 +48,9 @@ def main():
             if ev.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_position(pos)
-                # game.select(row, col)
+                game.select(row, col)
 
-        # game.update()
+        game.update()
 
     pygame.quit()
 
