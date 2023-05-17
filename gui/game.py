@@ -17,30 +17,45 @@ class Game:
         return self.board.winner()
 
     def select(self, row, col):
-        print(row, col)
-        if self.selected:
+        if self.selected != None:
             result = self.move(row, col)
             if not result:
                 self.selected = None
                 self.select(row, col)
+
         piece = self.board.get_piece(row, col)
         if piece != 0 and piece.color == self.player:
             self.selected = piece
             self.moves = self.board.get_possible_moves(piece, self.comp_playing)
-            print(self.moves)
             return True
 
         return False
 
     def move(self, row, col):
         piece = self.board.get_piece(row, col)
-        if self.selected and piece == 0 and (row, col) in self.moves:
-            self.board.move(self.selectd, row, col)
-            jump = self.moves[(row, col)]
+        selected_piece = self.board.get_piece(self.selected.row, self.selected.col)
+
+        diffR = selected_piece.row - row
+        diffC = selected_piece.col - col
+
+        if self.selected != None and piece == 0 and [(selected_piece.row, selected_piece.col), (row, col)] in self.moves:
+            self.board.move(self.selected, row, col)
+
+            jump = None
+
+            if diffR == -2 and diffC == 2:
+                jump = [self.board.get_piece(selected_piece.row + 1, selected_piece.col -1)]
+            elif diffR == 2 and diffC == 2:
+                jump = [self.board.get_piece(selected_piece.row - 1, selected_piece.col -1)]
+            elif diffR == 2 and diffC == -2:
+                jump = [self.board.get_piece(selected_piece.row - 1, selected_piece.col +1)]
+            elif diffR == -2 and diffC == -2:
+                jump = [self.board.get_piece(selected_piece.row + 1, selected_piece.col +1)]
+
             if jump:
                 self.board.remove(jump)
-            self.switch_player()
 
+            self.switch_player()
         else:
             return False
 

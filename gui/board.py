@@ -62,16 +62,17 @@ class Board:
         return pieces
 
     def move(self, piece, row, col):
-        self.board[piece.row][piece.col] = self.board[row][col]
-        self.board[row][col] = self.board[piece.row][piece.col]
+        print(row, col)
+        self.board[piece.row][piece.col] = 0
+        self.board[row][col] = piece
         piece.move(row, col)
 
         if row == 7 or row == 0:
             piece.king()
-            if piece.COLOR == (255, 255, 255):
-                self.c_kings += 1
-            else:
+            if piece.color == (255, 255, 255):
                 self.p_kings += 1
+            else:
+                self.c_kings += 1
 
     def get_piece(self, row, col):
         return self.board[row][col]

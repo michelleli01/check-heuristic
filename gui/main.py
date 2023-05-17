@@ -33,8 +33,8 @@ def main():
         # board.draw(screen=screen)
         # pygame.display.flip()
 
-        if game.player == (255, 0, 0):
-            val = algo.minimax(game.get_board(), 5, -math.inf, math.inf, False)
+        # if game.player == (255, 0, 0):
+        #     val = algo.minimax(game.get_board(), 5, -math.inf, math.inf, False)
 
         if game.winner() != None:
             print(game.winner())

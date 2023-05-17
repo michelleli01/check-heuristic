@@ -65,7 +65,6 @@ def possible_moves(board, piece, comp_playing):
                 moves.append([(r, c), (r - 2, c + 2)])
         if not comp_playing:
           if piece.color == (255, 255, 255) or piece.king:
-
               if valid(board, (r, c), (r - 1, c - 1), (-1, -1), comp_playing):
                 moves.append([(r, c), (r - 1, c - 1)])
               if valid(board, (r, c), (r - 1, c + 1), (-1, -1), comp_playing):
