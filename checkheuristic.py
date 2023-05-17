@@ -2,7 +2,7 @@ from copy import deepcopy
 import time
 import math
 
-class Node:
+class State:
     def __init__(self, board, move=None):
         self.board = board
         self.move = move
@@ -21,7 +21,7 @@ class Node:
             new_pos = avail_moves[i][1]
             state = deepcopy(curr)
             Checkers.move_piece(state, current_pos, new_pos)
-            children.append(Node(state, [current_pos, new_pos]))
+            children.append(State(state, [current_pos, new_pos]))
         return children
 
     def get_board(self):
@@ -353,7 +353,7 @@ class Checkers:
 
     def eval_states(self):
         t = time.time()
-        curr = Node(deepcopy(self.board))
+        curr = State(deepcopy(self.board))
         c_moves = curr.get_children(True)
         if len(c_moves) == 0:
             if self.p_pieces > self.c_pieces:
@@ -387,7 +387,7 @@ class Checkers:
     def minimax(self, board, n, a, b, max_player):
         if n == 0:
             return Checkers.calculate_heuristics(self, self.board)
-        curr = Node(deepcopy(self.board))
+        curr = State(deepcopy(self.board))
         if max_player == True:
             max_eval = -math.inf
             for c in curr.get_children(True):
