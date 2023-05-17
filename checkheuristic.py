@@ -2,6 +2,7 @@ from copy import deepcopy
 import time
 import math
 
+
 class State:
     def __init__(self, board, move=None):
         self.board = board
@@ -366,7 +367,7 @@ class Checkers:
         d = dict()
         for i in range(len(c_moves)):
             c = c_moves[i]
-            val = Checkers.minimax(self, 5, -math.inf, math.inf, False)
+            val = Checkers.minimax(self, c.get_board(), 5, -math.inf, math.inf, False)
             d[val] = c
 
         if len(d.keys()) == 0:
@@ -384,23 +385,28 @@ class Checkers:
         print(
             f"Total time taken for computer to make move: {str(diff)} seconds")
 
-    def minimax(self, n, a, b, max_player):
+    def minimax(self, board, n, a, b, max_player):
         if n == 0:
-            return Checkers.calculate_heuristics(self, self.board)
-
+            return Checkers.calculate_heuristics(self, board)
+        curr = State(deepcopy(self.board))
         if max_player == True:
             max_eval = -math.inf
-            eval = Checkers.minimax(self, n-1, a, b, False)
-            max_eval = max(max_eval, eval)
-            a = max(a, eval)
-
+            for c in curr.get_children(True):
+                ev = Checkers.minimax(self, c.get_board(), n-1, a, b, False)
+                max_eval = max(max_eval, ev)
+                a = max(a, ev)
+                if b <= a:
+                    break
             return max_eval
         else:
             min_eval = math.inf
-            eval = Checkers.minimax(self, n-1, a, b, True)
-            min_eval = min(min_eval, eval)
-            b = min(b, eval)
+            for c in curr.get_children(False):
+                ev = Checkers.minimax(self, c.get_board(), n-1, a, b, True)
+                min_eval = min(min_eval, ev)
+                b = min(b, ev)
 
+                if b <= a:
+                    break
             return min_eval
 
     def play(self):
