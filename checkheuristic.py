@@ -382,18 +382,18 @@ class Checkers:
         if max_player == True:
             max_eval = -math.inf
             for c in curr.get_children(True):
-                ev = Checkers.minimax(self, c.get_board(), n-1, a, b, False)
-                max_eval = max(max_eval, ev)
-                a = max(a, ev)
+                eval = Checkers.minimax(self, c.get_board(), n-1, a, b, False)
+                max_eval = max(max_eval, eval)
+                a = max(a, eval)
                 if b <= a:
                     break
             return max_eval
         else:
             min_eval = math.inf
             for c in curr.get_children(False):
-                ev = Checkers.minimax(self, c.get_board(), n-1, a, b, True)
-                min_eval = min(min_eval, ev)
-                b = min(b, ev)
+                eval = Checkers.minimax(self, c.get_board(), n-1, a, b, True)
+                min_eval = min(min_eval, eval)
+                b = min(b, eval)
                 if b <= a:
                     break
             return min_eval
