@@ -181,8 +181,6 @@ class Checkers:
         cC = current_pos[1]
         takeR = eat[0]
         takeC = eat[1]
-        if eat == (-1, -1):
-            return False
         if board[takeR][takeC] == "   ":
             return False
         if board[cR][cC] == " O " or board[cR][cC] == " o ":
@@ -281,7 +279,7 @@ class Checkers:
             board[cR-1][cC-1] = "   "
         elif diffR == 2 and diffC == -2:
             board[cR-1][cC+1] = "   "
-        elif diffR == -2 and diffC == 2:
+        elif diffR == -2 and diffC == -2:
             board[cR+1][cC+1] = "   "
         if letter == " x ":
             crown = " X "
