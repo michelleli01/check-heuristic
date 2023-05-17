@@ -1,5 +1,5 @@
 from copy import deepcopy
-# from board import Board
+import utils
 
 class State:
     def __init__(self, board, move=None):
@@ -12,9 +12,9 @@ class State:
         children = []
 
         if max_player:
-            avail_moves = Board.possible_moves(curr)
+            avail_moves = utils.possible_moves(curr)
         else:
-            avail_moves = Board.possible_moves(curr, False)
+            avail_moves = utils.possible_moves(curr, False)
         for i in range(len(avail_moves)):
             current_pos = avail_moves[i][0]
             new_pos = avail_moves[i][1]

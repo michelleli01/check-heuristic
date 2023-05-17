@@ -4,7 +4,8 @@ from node import State
 from copy import deepcopy
 import time
 import math
-import algo as algo
+import algo
+import utils
 
 class Board:
     def __init__(self):
@@ -115,87 +116,5 @@ class Board:
 
         return None
 
-    def valid(self, current_pos, new_pos, eat, comp_playing):
-        cR = current_pos[0]
-        cC = current_pos[1]
-        nR = new_pos[0]
-        nC = new_pos[1]
-        if nR > 7 or nR < 0:
-            return False
-        if nC > 7 or nC < 0:
-            return False
-        if self.board[cR][cC] == None:
-            return False
-        if self.board[nR][nC] != None:
-            return False
-        if comp_playing:
-            if self.board[cR][cC].color == (255, 255, 255) :
-                return False
-        if not comp_playing:
-            if self.board[cR][cC].color == (255, 0, 0):
-                return False
-        if eat == (-1, -1):
-            return self.board[nR][nC] == None
-        else:
-            return self.jump(self, current_pos, new_pos, eat)
-
-    def jump(self, current_pos, new_pos, eat=(-1, -1)):
-        cR = current_pos[0]
-        cC = current_pos[1]
-        takeR = eat[0]
-        takeC = eat[1]
-        if self.board[takeR][takeC] == None:
-            return False
-        if self.board[cR][cC].color == (255, 0, 0):
-            if self.board[takeR][takeC].color == (255, 255, 255):
-                return True
-        if self.board[cR][cC] == (255, 255, 255):
-            if self.board[takeR][takeC] == (255, 0, 0):
-                return True
-        return False
-
-    def possible_moves(self, comp_playing):
-        moves = []
-        for r in range(8):
-            for c in range(8):
-                if comp_playing:
-                    if self.board[r][c].color == (255, 255, 255) or self.board[r][c].king:
-                        if self.valid(self, (r, c), (r + 1, c + 1), (-1, -1), comp_playing):
-                            moves.append([(r, c), (r + 1, c + 1)])
-                        if self.valid(self, (r, c), (r + 1, c - 1), (-1, -1), comp_playing):
-                            moves.append([(r, c), (r + 1, c - 1)])
-                        if self.valid(self, (r, c), (r + 2, c - 2), (r+1, c-1), comp_playing):
-                            moves.append([(r, c), (r + 2, c - 2)])
-                        if self.valid(self, (r, c), (r + 2, c + 2), (r+1, c+1), comp_playing):
-                            moves.append([(r, c), (r + 2, c + 2)])
-                    if self.board[r][c].king:
-                        if self.valid(self, (r, c), (r - 1, c - 1), (-1, -1), comp_playing):
-                            moves.append([(r, c), (r - 1, c - 1)])
-                        if self.valid(self, (r, c), (r - 1, c + 1), (-1, -1), comp_playing):
-                            moves.append([(r, c), (r - 1, c + 1)])
-                        if self.valid(self, (r, c), (r - 2, c - 2), (r-1, c-1), comp_playing):
-                            moves.append([(r, c), (r - 2, c - 2)])
-                        if self.valid(self, (r, c), (r - 2, c + 2), (r-1, r+1), comp_playing):
-                            moves.append([(r, c), (r - 2, c + 2)])
-                if not comp_playing:
-                    if self.board[r][c].color == (255, 0, 0) or self.board[r][c].king:
-                        if self.valid(self, (r, c), (r - 1, c - 1), (-1, -1), comp_playing):
-                            moves.append([(r, c), (r - 1, c - 1)])
-                        if self.valid(self, (r, c), (r - 1, c + 1), (-1, -1), comp_playing):
-                            moves.append([(r, c), (r - 1, c + 1)])
-                        if self.valid(self, (r, c), (r - 2, c - 2), (r-1, c-1), comp_playing):
-                            moves.append([(r, c), (r - 2, c - 2)])
-                        if self.valid(self, (r, c), (r - 2, c + 2), (r-1, c+1), comp_playing):
-                            moves.append([(r, c), (r - 2, c + 2)])
-                    if self.board[r][c].king:
-                        if self.valid(self, (r, c), (r + 1, c - 1), (-1, -1), comp_playing):
-                            moves.append([(r, c), (r + 1, c - 1)])
-                        if self.valid(self, (r, c), (r + 1, c + 1), (-1, -1), comp_playing):
-                            moves.append([(r, c), (r + 1, c + 1)])
-                        if self.valid(self, (r, c), (r + 2, c - 2), (r+1, c-1), comp_playing):
-                            moves.append([(r, c), (r + 2, c - 2)])
-                        if self.valid(self, (r, c), (r + 2, c + 2), (r+1, c+1), comp_playing):
-                            moves.append([(r, c), (r + 2, c + 2)])
-
-        return moves
-
+    def get_possible_moves(self, comp_playing):
+        return utils.possible_moves(self.board, comp_playing)
