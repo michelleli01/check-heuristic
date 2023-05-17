@@ -2,11 +2,9 @@ from copy import deepcopy
 import time
 import math
 
-
 class Node:
-    def __init__(self, board, move=None):
+    def __init__(self, board):
         self.board = board
-        self.move = move
 
     def get_children(self, max_player):
         curr = deepcopy(self.board)
