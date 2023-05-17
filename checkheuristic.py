@@ -2,6 +2,7 @@ from copy import deepcopy
 import time
 import math
 
+
 class State:
     def __init__(self, board, move=None):
         self.board = board
@@ -180,6 +181,8 @@ class Checkers:
         cC = current_pos[1]
         takeR = eat[0]
         takeC = eat[1]
+        if eat == (-1, -1):
+            return False
         if board[takeR][takeC] == "   ":
             return False
         if board[cR][cC] == " O " or board[cR][cC] == " o ":
@@ -357,7 +360,8 @@ class Checkers:
         d = dict()
         for i in range(len(c_moves)):
             c = c_moves[i]
-            val = Checkers.minimax(self, c.get_board(), 5, -math.inf, math.inf, False)
+            val = Checkers.minimax(self, c.get_board(),
+                                   5, -math.inf, math.inf, False)
             d[val] = c
 
         if len(d.keys()) == 0:
