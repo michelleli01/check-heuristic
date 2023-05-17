@@ -1,6 +1,6 @@
 import pygame
 from piece import Piece
-# from node import State
+from node import State
 from copy import deepcopy
 import time
 import math
@@ -21,36 +21,36 @@ class Board:
 
     def evaluate(self):
         t = time.time()
-    #   curr = State(deepcopy(self.board))
-    #   c_moves = curr.get_children(True)
-    #   if len(c_moves) == 0:
-    #       if self.p_pieces > self.c_pieces:
-    #           print("You have more pieces than the computer. YOU WIN")
-    #           exit()
-    #       else:
-    #           print("Computer has no available moves left. DRAW")
-    #           exit()
+        curr = State(deepcopy(self.board))
+        c_moves = curr.get_children(True)
+        if len(c_moves) == 0:
+            if self.p_pieces > self.c_pieces:
+                print("You have more pieces than the computer. YOU WIN")
+                exit()
+            else:
+                print("Computer has no available moves left. DRAW")
+                exit()
 
-    #   d = dict()
-    #   for i in range(len(c_moves)):
-    #       c = c_moves[i]
-    #       val = algo.minimax(self, c.get_board(), 5, -math.inf, math.inf, False)
-    #       d[val] = c
+        d = dict()
+        for i in range(len(c_moves)):
+            c = c_moves[i]
+            val = algo.minimax(self, c.get_board(), 5, -math.inf, math.inf, False)
+            d[val] = c
 
-    #   if len(d.keys()) == 0:
-    #       print("Computer has cornered itself. YOU WIN")
-    #       exit()
-    #   n_board = d[max(d)].get_board()
-    #   move = d[max(d)].move
-    #   self.board = n_board
+        if len(d.keys()) == 0:
+            print("Computer has cornered itself. YOU WIN")
+            exit()
+        n_board = d[max(d)].get_board()
+        move = d[max(d)].move
+        self.board = n_board
 
-    #   t1 = time.time()
-    #   diff = t1-t
+        t1 = time.time()
+        diff = t1-t
 
-    #   print(
-    #       f"Computer moved from '{str(move[0][0]), str(move[0][1])}' to '{str(move[1][0]), str(move[1][1])}'")
-    #   print(
-    #       f"Total time taken for computer to make move: {str(diff)} seconds")
+        print(
+            f"Computer moved from '{str(move[0][0]), str(move[0][1])}' to '{str(move[1][0]), str(move[1][1])}'")
+        print(
+            f"Total time taken for computer to make move: {str(diff)} seconds")
 
     def get_all_pieces(self, color):
         pieces = []
@@ -124,18 +124,18 @@ class Board:
             return False
         if nC > 7 or nC < 0:
             return False
-        if self.board[cR][cC] == "   ":
+        if self.board[cR][cC] == None:
             return False
-        if self.board[nR][nC] != "   ":
+        if self.board[nR][nC] != None:
             return False
         if comp_playing:
-            if self.board[cR][cC] == " x " or self.board[cR][cC] == " X ":
+            if self.board[cR][cC].color == (255, 255, 255) :
                 return False
         if not comp_playing:
-            if self.board[cR][cC] == " o " or self.board[cR][cC] == " O ":
+            if self.board[cR][cC].color == (255, 0, 0):
                 return False
         if eat == (-1, -1):
-            return self.board[nR][nC] == "   "
+            return self.board[nR][nC] == None
         else:
             return self.jump(self, current_pos, new_pos, eat)
 
@@ -144,13 +144,13 @@ class Board:
         cC = current_pos[1]
         takeR = eat[0]
         takeC = eat[1]
-        if self.board[takeR][takeC] == "   ":
+        if self.board[takeR][takeC] == None:
             return False
-        if self.board[cR][cC] == " O " or self.board[cR][cC] == " o ":
-            if self.board[takeR][takeC] == " X " or self.board[takeR][takeC] == " x ":
+        if self.board[cR][cC].color == (255, 0, 0):
+            if self.board[takeR][takeC].color == (255, 255, 255):
                 return True
-        if self.board[cR][cC] == " X " or self.board[cR][cC] == " x ":
-            if self.board[takeR][takeC] == " O " or self.board[takeR][takeC] == " o ":
+        if self.board[cR][cC] == (255, 255, 255):
+            if self.board[takeR][takeC] == (255, 0, 0):
                 return True
         return False
 

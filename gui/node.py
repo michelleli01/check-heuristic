@@ -19,7 +19,7 @@ class State:
             current_pos = avail_moves[i][0]
             new_pos = avail_moves[i][1]
             state = deepcopy(curr)
-            Board.move_piece(state, current_pos, new_pos)
+            state.board[current_pos[0]][current_pos[1]].move(new_pos)
             children.append(State(state, [current_pos, new_pos]))
         return children
 
