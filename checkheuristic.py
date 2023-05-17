@@ -387,25 +387,20 @@ class Checkers:
     def minimax(self, n, a, b, max_player):
         if n == 0:
             return Checkers.calculate_heuristics(self, self.board)
-        curr = State(deepcopy(self.board))
+
         if max_player == True:
             max_eval = -math.inf
-            for c in curr.get_children(True):
-                eval = Checkers.minimax(self, n-1, a, b, False)
-                max_eval = max(max_eval, eval)
-                a = max(a, eval)
-                if b <= a:
-                    break
+            eval = Checkers.minimax(self, n-1, a, b, False)
+            max_eval = max(max_eval, eval)
+            a = max(a, eval)
+
             return max_eval
         else:
             min_eval = math.inf
-            for c in curr.get_children(False):
-                eval = Checkers.minimax(self, n-1, a, b, True)
-                min_eval = min(min_eval, eval)
-                b = min(b, eval)
+            eval = Checkers.minimax(self, n-1, a, b, True)
+            min_eval = min(min_eval, eval)
+            b = min(b, eval)
 
-                if b <= a:
-                    break
             return min_eval
 
     def play(self):
