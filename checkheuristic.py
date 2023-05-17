@@ -2,7 +2,6 @@ from copy import deepcopy
 import time
 import math
 
-
 class State:
     def __init__(self, board, move=None):
         self.board = board
@@ -302,22 +301,13 @@ class Checkers:
         self.p_pieces = 0
         self.c_pieces = 0
 
-        # letters = ["A", "B", "C", "D", "E", "F", "G", "H"]
-        # numbers = ["1", "2", "3", "4", "5", "6", "7", "8"]
-
         while True:
             current_pos = input(
                 "Which piece do you want to move? ('A1'): ")
             if current_pos == "" or current_pos == "s":
                 print("Game over.")
                 exit()
-            # cR = current_pos[0]
-            # cC = current_pos[-1]
-            # if cR not in letters or cC not in numbers:
-            #     print(
-            #         "Illegal input: please make sure to have the row capitalized and both row and column within range.")
-            # elif (cR, cC) not in [move[0] for move in poss_moves]:
-            #     print("Illegal input: please only enter positions where an 'x' or 'X' is located.")
+
             new_pos = input("Where do you want to move to? ('B2'): ")
             if new_pos == "" or new_pos == "s":
                 print("Game over.")
