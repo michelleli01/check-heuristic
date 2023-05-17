@@ -3,8 +3,9 @@ import time
 import math
 
 class Node:
-    def __init__(self, board):
+    def __init__(self, board, move=None):
         self.board = board
+        self.move = move
 
     def get_children(self, max_player):
         curr = deepcopy(self.board)
