@@ -1,6 +1,6 @@
 import pygame
 from game import Game
-import algo
+from algo import Algo
 import math
 
 WIDTH = 800
@@ -27,14 +27,13 @@ def main():
     pygame.display.set_caption("Check-heuristic")
 
     game = Game(screen)
+    algo = Algo(game.board.c_pieces, game.board.p_pieces, game.board.board)
 
     while playing:
         clock.tick(60)
-        # board.draw(screen=screen)
-        # pygame.display.flip()
 
-        # if game.player == (255, 0, 0):
-        #     val = algo.minimax(game.get_board(), 5, -math.inf, math.inf, False)
+        if game.player == (255, 0, 0):
+            val = algo.minimax(game.get_board(), 5, -math.inf, math.inf, False)
 
         if game.winner() != None:
             print(game.winner())

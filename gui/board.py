@@ -117,5 +117,5 @@ class Board:
 
         return None
 
-    def get_possible_moves(self, piece, comp_playing):
-        return utils.possible_moves(self.board, piece, comp_playing)
+    def get_possible_piece_moves(self, piece, comp_playing):
+        return utils.possible_piece_moves(self.board, piece, comp_playing)

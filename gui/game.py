@@ -26,7 +26,7 @@ class Game:
         piece = self.board.get_piece(row, col)
         if piece != 0 and piece.color == self.player:
             self.selected = piece
-            self.moves = self.board.get_possible_moves(piece, self.comp_playing)
+            self.moves = self.board.get_possible_piece_moves(piece, self.comp_playing)
             return True
 
         return False
