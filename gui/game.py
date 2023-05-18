@@ -44,16 +44,17 @@ class Game:
             jump = None
 
             if diffR == -2 and diffC == 2:
-                jump = [self.board.get_piece(selected_piece.row + 1, selected_piece.col -1)]
+                jump = self.board.get_piece(selected_piece.row + 1, selected_piece.col - 1)
             elif diffR == 2 and diffC == 2:
-                jump = [self.board.get_piece(selected_piece.row - 1, selected_piece.col -1)]
+                jump = self.board.get_piece(selected_piece.row - 1, selected_piece.col - 1)
             elif diffR == 2 and diffC == -2:
-                jump = [self.board.get_piece(selected_piece.row - 1, selected_piece.col +1)]
+                jump = self.board.get_piece(selected_piece.row - 1, selected_piece.col + 1)
             elif diffR == -2 and diffC == -2:
-                jump = [self.board.get_piece(selected_piece.row + 1, selected_piece.col +1)]
+                jump = self.board.get_piece(selected_piece.row + 1, selected_piece.col + 1)
 
             if jump:
-                self.board.remove(jump)
+                print(jump.row)
+                self.board.remove_piece(jump)
 
             self.switch_player()
         else:

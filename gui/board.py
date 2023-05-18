@@ -99,14 +99,13 @@ class Board:
                 if piece != 0:
                     piece.draw(screen)
 
-    def remove_piece(self, pieces):
-        for piece in pieces:
-            self.board[piece.row][piece.col] = 0
-            if piece != 0:
-                if piece.color == (255, 0, 0):
-                    self.c_pieces -= 1
-                else:
-                    self.p_pieces -= 1
+    def remove_piece(self, piece):
+        self.board[piece.row][piece.col] = 0
+        if piece != 0:
+            if piece.color == (255, 0, 0):
+                self.c_pieces -= 1
+            else:
+                self.p_pieces -= 1
 
 
     def winner(self):
