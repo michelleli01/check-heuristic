@@ -13,8 +13,8 @@ class Game:
         self.moves = []
         self.comp_playing = False
 
-    def winner(self):
-        return self.board.winner()
+    def get_winner(self):
+        return self.board.get_winner()
 
     def select(self, row, col):
         if self.selected != None:
@@ -39,7 +39,7 @@ class Game:
         diffC = selected_piece.col - col
 
         if self.selected != None and piece == 0 and [(selected_piece.row, selected_piece.col), (row, col)] in self.moves:
-            self.board.move(self.selected, row, col)
+            self.board.move_piece(self.selected, row, col)
 
             jump = None
 
@@ -53,7 +53,6 @@ class Game:
                 jump = self.board.get_piece(selected_piece.row + 1, selected_piece.col + 1)
 
             if jump:
-                print(jump.row)
                 self.board.remove_piece(jump)
 
             self.switch_player()
@@ -63,7 +62,7 @@ class Game:
         return True
 
     def update(self):
-        self.board.draw(self.screen)
+        self.board.draw_board(self.screen)
         self.draw_valid_moves(self.moves)
         pygame.display.update()
 
@@ -85,7 +84,3 @@ class Game:
 
     def get_board(self):
         return self.board
-
-    def comp_move(self, board):
-        self.board = board
-        self.switch_player()

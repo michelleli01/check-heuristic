@@ -1,5 +1,5 @@
 import math
-from node import State
+from state import State
 from copy import deepcopy
 
 class Algo:

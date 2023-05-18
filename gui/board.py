@@ -1,6 +1,6 @@
 import pygame
 from piece import Piece
-from node import State
+from state import State
 from copy import deepcopy
 import time
 import math
@@ -14,7 +14,7 @@ class Board:
         self.c_kings = self.p_kings = 0
         self.create_board()
 
-    def draw_squares(self, screen):
+    def draw_tiles(self, screen):
         screen.fill((0, 0, 0))
         for row in range(8):
             for col in range(row % 2, 8, 2):
@@ -53,15 +53,7 @@ class Board:
         print(
             f"Total time taken for computer to make move: {str(diff)} seconds")
 
-    def get_all_pieces(self, color):
-        pieces = []
-        for row in self.board:
-            for piece in row:
-                if piece != 0 and piece.color == color:
-                    pieces.append(piece)
-        return pieces
-
-    def move(self, piece, row, col):
+    def move_piece(self, piece, row, col):
         print(row, col)
         self.board[piece.row][piece.col] = 0
         self.board[row][col] = piece
@@ -91,13 +83,13 @@ class Board:
                 else:
                     self.board[row].append(0)
 
-    def draw(self, screen):
-        self.draw_squares(screen)
+    def draw_board(self, screen):
+        self.draw_tiles(screen)
         for row in range(8):
             for col in range(8):
                 piece = self.board[row][col]
                 if piece != 0:
-                    piece.draw(screen)
+                    piece.draw_piece(screen)
 
     def remove_piece(self, piece):
         self.board[piece.row][piece.col] = 0
@@ -108,7 +100,7 @@ class Board:
                 self.p_pieces -= 1
 
 
-    def winner(self):
+    def get_winner(self):
         if self.c_pieces <= 0:
             return (255, 255, 255)
         elif self.p_pieces <= 0:
