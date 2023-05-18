@@ -70,7 +70,7 @@ class Game:
         for move in moves:
             newRow = move[1][0]
             newCol = move[1][1]
-            pygame.draw.circle(self.screen, (0, 0, 255), (newCol*100 + 100//2, newRow * 100 + 100//2), 15)
+            pygame.draw.circle(self.screen, (0, 255, 0), (newCol*100 + 100//2, newRow * 100 + 100//2), 15)
 
     def switch_player(self):
         self.moves = []
