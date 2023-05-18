@@ -33,7 +33,7 @@ def main():
         clock.tick(60)
 
         if game.player == (255, 0, 0):
-            val = algo.minimax(game.get_board(), 5, -math.inf, math.inf, False)
+            val = algo.minimax(game.board.board, 5, -math.inf, math.inf, False)
 
         if game.winner() != None:
             print(game.winner())

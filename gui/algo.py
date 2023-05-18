@@ -12,7 +12,7 @@ class Algo:
         if n == 0:
             return Algo.calculate_heuristics(self, board)
 
-        curr = State(deepcopy(self.board))
+        curr = State(deepcopy(board))
         if max_player == True:
             max_eval = -math.inf
             for c in curr.get_children(True):

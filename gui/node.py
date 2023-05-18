@@ -3,10 +3,8 @@ import utils
 
 class State:
     def __init__(self, board, move=None):
-        if type(board) != list:
-            self.board = board.board
-        else:
-            self.board = board
+
+        self.board = board
         self.move = move
 
     def get_children(self, max_player):
