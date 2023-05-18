@@ -213,6 +213,10 @@ class Checkers:
         if eat == (-1, -1):
             return board[nR][nC] == "   "
         else:
+            if eat[0] > 7 or eat[0] < 0:
+                return False
+            if eat[1] > 7 or eat[1] < 0:
+                return False
             return Checkers.jump(board, current_pos, new_pos, eat)
 
     def possible_moves(board, comp_playing=True):
